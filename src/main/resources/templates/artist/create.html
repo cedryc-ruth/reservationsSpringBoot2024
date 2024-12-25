@@ -12,6 +12,9 @@
 	     <div layout:fragment="content">
 			<h1>Nouvel artiste</h1>
 	        
+			<div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
+			<div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+
 	        <form th:action="@{/artists/create}" th:object="${artist}" th:method="post">
 			    <div>
 			      	<label>Firstname:</label>
