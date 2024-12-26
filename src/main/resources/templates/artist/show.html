@@ -6,12 +6,10 @@
 </head>
 <body>
 	<div class="container">
-	     <div layout:fragment="content">
+		<div id="notification" th:replace="~{main :: notification}"></div>
+	    <div layout:fragment="content">
 	        <h1 th:text="|${artist.firstname}  ${artist.lastname}|">Bob Sull</h1>      
 	        
-			<div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
-			<div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
-
 	        <div class="actions">
 				<a th:href="@{/artists/{id}/edit(id=${artist.id})}">Edit</a>
 				<form th:id="|deleteForm-${artist.id}|" 

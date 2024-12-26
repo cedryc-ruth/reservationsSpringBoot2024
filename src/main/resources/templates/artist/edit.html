@@ -9,12 +9,10 @@
 </head>
 <body>
 	<div class="container">
-	     <div layout:fragment="content">
+		<div id="notification" th:replace="~{main :: notification}"></div>
+	    <div layout:fragment="content">
 	        <h1 th:text="|${artist.firstname}  ${artist.lastname}|">Bob Sull</h1>
 	        
-			<div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
-			<div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
-
 	        <form th:action="@{/artists/{id}/edit(id=${artist.id})}" th:object="${artist}" th:method="put">
 			    <div>
 			    	<label>Id:</label> 
@@ -22,13 +20,13 @@
 			    </div>
 			    <div>
 			      	<label>Firstname:</label>
-			       	<input type="text" th:field="*{firstname}">
+			       	<input type="text" th:field="*{firstname}" maxlength="60" required>
 					<p th:if="${#fields.hasErrors('firstname')}"
 					   		th:errors="*{firstname}" th:errorclass="fieldError"></p>
 			    </div>
 			    <div>
 		        	<label>Lastname:</label>
-		        	<input type="text" th:field="*{lastname}">
+		        	<input type="text" th:field="*{lastname}" maxlength="60" required>
 					<p th:if="${#fields.hasErrors('lastname')}"
 					        th:errors="*{lastname}" th:errorclass="fieldError"></p>
 			    </div>

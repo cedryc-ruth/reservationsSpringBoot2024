@@ -65,7 +65,7 @@ public class ArtistController {
 	@PutMapping("/artists/{id}/edit")
 	public String update(@Valid @ModelAttribute Artist artist, BindingResult bindingResult, @PathVariable long id, Model model, RedirectAttributes redirAttrs) {
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("error", "Échec de la modification de l'artiste !");
+			model.addAttribute("errorMessage", "Échec de la modification de l'artiste !");
 			
 			return "artist/edit";
 		}
@@ -77,7 +77,7 @@ public class ArtistController {
 		}		
 	
 	    service.updateArtist(id, artist);
-	    redirAttrs.addFlashAttribute("success", "Artiste modifié avec succès.");
+	    redirAttrs.addFlashAttribute("successMessage", "Artiste modifié avec succès.");
     
 		return "redirect:/artists/"+artist.getId();
 	}
@@ -95,15 +95,15 @@ public class ArtistController {
 	public String store(@Valid @ModelAttribute Artist artist, BindingResult bindingResult, Model model, RedirectAttributes redirAttrs) {
 	    
 	    if (bindingResult.hasErrors()) {
-	    	model.addAttribute("error", "Échec de la création de l'artiste !");
+	    	model.addAttribute("errorMessage", "Échec de la création de l'artiste !");
 	    	
 	    	return "artist/create";
 	    }
 		    
 	    service.addArtist(artist);
-	    redirAttrs.addFlashAttribute("success", "Artiste créé avec succès.");
+	    redirAttrs.addFlashAttribute("successMessage", "Nouvel artiste créé avec succès.");
 
-	    return "redirect:/artists/"+artist.getId();
+	    return "redirect:/artists";
 	}
 
 	@DeleteMapping("/artists/{id}")
@@ -113,9 +113,9 @@ public class ArtistController {
 	    if(existing!=null) {		
 	    	service.deleteArtist(id);
 	    	
-	    	redirAttrs.addFlashAttribute("success", "Artiste supprimé avec succès.");
+	    	redirAttrs.addFlashAttribute("successMessage", "Artiste supprimé avec succès.");
 	    } else {
-	    	redirAttrs.addFlashAttribute("error", "Échec de la suppression de l'artiste !");
+	    	redirAttrs.addFlashAttribute("errorMessage", "Échec de la suppression de l'artiste !");
 	    }
 	    	    
 	    return "redirect:/artists";
