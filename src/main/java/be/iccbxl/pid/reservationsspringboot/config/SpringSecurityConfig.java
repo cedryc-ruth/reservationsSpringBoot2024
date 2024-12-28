@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.BCryptVersion;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
@@ -31,12 +30,20 @@ public class SpringSecurityConfig {
     @Bean
     public SecurityFilterChain configure(final HttpSecurity http) throws Exception {
         return http.cors(Customizer.withDefaults())
-                .csrf(Customizer.withDefaults())
+                //.csrf(Customizer.withDefaults())
+        		.csrf(csrf -> csrf.disable())	//Désactiver la protection des formulaires
+                
                 .authorizeHttpRequests(auth -> {
                 	auth.requestMatchers("/admin").hasRole("ADMIN");
                     auth.requestMatchers("/user").hasRole("MEMBER");
+                    
+                    //API
+                    auth.requestMatchers("/api/public/**").permitAll(); // Endpoints publics
+                    auth.requestMatchers("/api/admin/**").hasRole("ADMIN"); // Endpoints réservés aux administrateurs
+
                     auth.anyRequest().permitAll();
                 })
+                .httpBasic(Customizer.withDefaults()) // Permet l'authentification de base (utile pour les tests)
                 .formLogin(form -> form
                     .loginPage("/login")
                     .usernameParameter("login")
