@@ -33,4 +33,8 @@ public class LoginController {
         return "authentication/login";
     }
 
+    @GetMapping("/password_reset")
+    public String passwordReset() {
+    	return "authentication/passwordReset";
+    }
 }
